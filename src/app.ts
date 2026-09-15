@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import path from "path";
 import authRoutes from "./modules/auth/auth.routes.js";
 import {
@@ -16,6 +17,12 @@ import { adminVolunteerRoutes } from "./modules/volunteers/volunteer.routes.js";
 
 const app = express();
 
+app.use(
+    cors({
+        origin: process.env.CORS_ORIGIN ?? "http://localhost:5173",
+        credentials: true,
+    })
+);
 app.use(express.json());
 
 app.use("/auth", authRoutes);

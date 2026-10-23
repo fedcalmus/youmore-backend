@@ -4,9 +4,14 @@ import {
     deleteFinancingEntity,
     getFinancingEntityById,
     listFinancingEntities,
+    listFinancingEntitiesAdmin,
     updateFinancingEntity,
 } from "./financing-entity.service.js";
 import { validateFinancingEntityInput } from "./financing-entity.validation.js";
+import { parseListQuery } from "../../lib/query.js";
+import { toCsv } from "../../lib/csv.js";
+
+const FINANCING_ENTITY_SORT_FIELDS = ["name", "createdAt"] as const;
 
 export async function createFinancingEntityController(
     req: Request,
@@ -44,6 +49,43 @@ export async function listFinancingEntitiesController(
     try {
         const entities = await listFinancingEntities();
         return res.json(entities);
+    } catch (error) {
+        return res.status(500).json({ message: (error as Error).message });
+    }
+}
+
+export async function listFinancingEntitiesAdminController(
+    req: Request,
+    res: Response
+) {
+    try {
+        const filters = parseListQuery(req.query, FINANCING_ENTITY_SORT_FIELDS, "createdAt");
+        const entities = await listFinancingEntitiesAdmin(filters);
+        return res.json(entities);
+    } catch (error) {
+        return res.status(500).json({ message: (error as Error).message });
+    }
+}
+
+export async function exportFinancingEntitiesController(
+    req: Request,
+    res: Response
+) {
+    try {
+        const filters = parseListQuery(req.query, FINANCING_ENTITY_SORT_FIELDS, "createdAt");
+        const entities = await listFinancingEntitiesAdmin(filters);
+
+        const csv = toCsv(
+            entities.map((e) => ({ name: e.name, url: e.url })),
+            [
+                { key: "name", header: "Name" },
+                { key: "url", header: "URL" },
+            ]
+        );
+
+        res.setHeader("Content-Type", "text/csv; charset=utf-8");
+        res.setHeader("Content-Disposition", 'attachment; filename="financing-entities.csv"');
+        return res.send(csv);
     } catch (error) {
         return res.status(500).json({ message: (error as Error).message });
     }

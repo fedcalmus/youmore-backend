@@ -3,6 +3,7 @@ import { isNonEmptyString, isValidEmail, isValidPhone } from "../../lib/validato
 export function validateTeamMemberInput(body: {
     name?: unknown;
     surname?: unknown;
+    role?: unknown;
     email?: unknown;
     phoneNumber?: unknown;
 }) {
@@ -12,6 +13,10 @@ export function validateTeamMemberInput(body: {
 
     if (!isNonEmptyString(body.surname)) {
         return "Surname is required";
+    }
+
+    if (body.role !== undefined && body.role !== null && typeof body.role !== "string") {
+        return "Role must be text";
     }
 
     if (!isValidEmail(body.email)) {

@@ -56,8 +56,22 @@ export const ModelName = {
   TeamMember: 'TeamMember',
   StaticPage: 'StaticPage',
   ContactInfo: 'ContactInfo',
+  AboutPage: 'AboutPage',
+  AboutGalleryImage: 'AboutGalleryImage',
+  AboutGoal: 'AboutGoal',
+  NetworkPartner: 'NetworkPartner',
   Project: 'Project',
-  VolunteerApplication: 'VolunteerApplication'
+  ProjectImage: 'ProjectImage',
+  LegalPage: 'LegalPage',
+  LegalSection: 'LegalSection',
+  CookieCategory: 'CookieCategory',
+  VolunteerApplication: 'VolunteerApplication',
+  HomePage: 'HomePage',
+  HomeStep: 'HomeStep',
+  HomeTestimonial: 'HomeTestimonial',
+  HomeGalleryImage: 'HomeGalleryImage',
+  TestimonialsPage: 'TestimonialsPage',
+  TestimonialCard: 'TestimonialCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -103,6 +117,7 @@ export const TeamMemberScalarFieldEnum = {
   id: 'id',
   name: 'name',
   surname: 'surname',
+  role: 'role',
   email: 'email',
   phoneNumber: 'phoneNumber',
   image: 'image',
@@ -138,29 +153,137 @@ export const ContactInfoScalarFieldEnum = {
 export type ContactInfoScalarFieldEnum = (typeof ContactInfoScalarFieldEnum)[keyof typeof ContactInfoScalarFieldEnum]
 
 
+export const AboutPageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  titleEn: 'titleEn',
+  description: 'description',
+  descriptionEn: 'descriptionEn',
+  longDescription: 'longDescription',
+  longDescriptionEn: 'longDescriptionEn',
+  sede: 'sede',
+  legalForm: 'legalForm',
+  legalFormEn: 'legalFormEn',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AboutPageScalarFieldEnum = (typeof AboutPageScalarFieldEnum)[keyof typeof AboutPageScalarFieldEnum]
+
+
+export const AboutGalleryImageScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  caption: 'caption',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AboutGalleryImageScalarFieldEnum = (typeof AboutGalleryImageScalarFieldEnum)[keyof typeof AboutGalleryImageScalarFieldEnum]
+
+
+export const AboutGoalScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  titleEn: 'titleEn',
+  text: 'text',
+  textEn: 'textEn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AboutGoalScalarFieldEnum = (typeof AboutGoalScalarFieldEnum)[keyof typeof AboutGoalScalarFieldEnum]
+
+
+export const NetworkPartnerScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  titleEn: 'titleEn',
+  subtitle: 'subtitle',
+  subtitleEn: 'subtitleEn',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NetworkPartnerScalarFieldEnum = (typeof NetworkPartnerScalarFieldEnum)[keyof typeof NetworkPartnerScalarFieldEnum]
+
+
 export const ProjectScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  titleEn: 'titleEn',
   slug: 'slug',
   shortDescription: 'shortDescription',
+  shortDescriptionEn: 'shortDescriptionEn',
   description: 'description',
+  descriptionEn: 'descriptionEn',
   mainImage: 'mainImage',
   documentUrl: 'documentUrl',
-  projectCode: 'projectCode',
   category: 'category',
-  status: 'status',
+  scope: 'scope',
   location: 'location',
+  locationEn: 'locationEn',
   startDate: 'startDate',
   endDate: 'endDate',
-  beneficiaries: 'beneficiaries',
-  funding: 'funding',
-  richContent: 'richContent',
+  whoCanJoin: 'whoCanJoin',
+  whoCanJoinEn: 'whoCanJoinEn',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectImageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  image: 'image',
+  caption: 'caption',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectImageScalarFieldEnum = (typeof ProjectImageScalarFieldEnum)[keyof typeof ProjectImageScalarFieldEnum]
+
+
+export const LegalPageScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  title: 'title',
+  intro: 'intro',
+  bannerTitle: 'bannerTitle',
+  bannerText: 'bannerText',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LegalPageScalarFieldEnum = (typeof LegalPageScalarFieldEnum)[keyof typeof LegalPageScalarFieldEnum]
+
+
+export const LegalSectionScalarFieldEnum = {
+  id: 'id',
+  legalPageId: 'legalPageId',
+  order: 'order',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LegalSectionScalarFieldEnum = (typeof LegalSectionScalarFieldEnum)[keyof typeof LegalSectionScalarFieldEnum]
+
+
+export const CookieCategoryScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  purpose: 'purpose',
+  duration: 'duration',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CookieCategoryScalarFieldEnum = (typeof CookieCategoryScalarFieldEnum)[keyof typeof CookieCategoryScalarFieldEnum]
 
 
 export const VolunteerApplicationScalarFieldEnum = {
@@ -191,20 +314,98 @@ export const VolunteerApplicationScalarFieldEnum = {
 export type VolunteerApplicationScalarFieldEnum = (typeof VolunteerApplicationScalarFieldEnum)[keyof typeof VolunteerApplicationScalarFieldEnum]
 
 
+export const HomePageScalarFieldEnum = {
+  id: 'id',
+  stepsEyebrow: 'stepsEyebrow',
+  stepsTitle: 'stepsTitle',
+  aboutTeaserEyebrow: 'aboutTeaserEyebrow',
+  aboutTeaserTitle: 'aboutTeaserTitle',
+  aboutTeaserText: 'aboutTeaserText',
+  testimonialsEyebrow: 'testimonialsEyebrow',
+  testimonialsTitle: 'testimonialsTitle',
+  fundersEyebrow: 'fundersEyebrow',
+  fundersIntroText: 'fundersIntroText',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomePageScalarFieldEnum = (typeof HomePageScalarFieldEnum)[keyof typeof HomePageScalarFieldEnum]
+
+
+export const HomeStepScalarFieldEnum = {
+  id: 'id',
+  order: 'order',
+  title: 'title',
+  text: 'text',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeStepScalarFieldEnum = (typeof HomeStepScalarFieldEnum)[keyof typeof HomeStepScalarFieldEnum]
+
+
+export const HomeTestimonialScalarFieldEnum = {
+  id: 'id',
+  order: 'order',
+  quote: 'quote',
+  name: 'name',
+  context: 'context',
+  variant: 'variant',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeTestimonialScalarFieldEnum = (typeof HomeTestimonialScalarFieldEnum)[keyof typeof HomeTestimonialScalarFieldEnum]
+
+
+export const HomeGalleryImageScalarFieldEnum = {
+  id: 'id',
+  slot: 'slot',
+  image: 'image',
+  caption: 'caption',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HomeGalleryImageScalarFieldEnum = (typeof HomeGalleryImageScalarFieldEnum)[keyof typeof HomeGalleryImageScalarFieldEnum]
+
+
+export const TestimonialsPageScalarFieldEnum = {
+  id: 'id',
+  heroEyebrow: 'heroEyebrow',
+  heroQuote: 'heroQuote',
+  heroName: 'heroName',
+  heroCountry: 'heroCountry',
+  heroContext: 'heroContext',
+  ctaText: 'ctaText',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TestimonialsPageScalarFieldEnum = (typeof TestimonialsPageScalarFieldEnum)[keyof typeof TestimonialsPageScalarFieldEnum]
+
+
+export const TestimonialCardScalarFieldEnum = {
+  id: 'id',
+  order: 'order',
+  variant: 'variant',
+  tag: 'tag',
+  quote: 'quote',
+  author: 'author',
+  videoUrl: 'videoUrl',
+  status: 'status',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TestimonialCardScalarFieldEnum = (typeof TestimonialCardScalarFieldEnum)[keyof typeof TestimonialCardScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -221,13 +422,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

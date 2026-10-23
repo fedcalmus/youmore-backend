@@ -67,12 +67,82 @@ export type StaticPage = Prisma.StaticPageModel
  */
 export type ContactInfo = Prisma.ContactInfoModel
 /**
+ * Model AboutPage
+ * 
+ */
+export type AboutPage = Prisma.AboutPageModel
+/**
+ * Model AboutGalleryImage
+ * 
+ */
+export type AboutGalleryImage = Prisma.AboutGalleryImageModel
+/**
+ * Model AboutGoal
+ * 
+ */
+export type AboutGoal = Prisma.AboutGoalModel
+/**
+ * Model NetworkPartner
+ * 
+ */
+export type NetworkPartner = Prisma.NetworkPartnerModel
+/**
  * Model Project
  * 
  */
 export type Project = Prisma.ProjectModel
 /**
+ * Model ProjectImage
+ * 
+ */
+export type ProjectImage = Prisma.ProjectImageModel
+/**
+ * Model LegalPage
+ * 
+ */
+export type LegalPage = Prisma.LegalPageModel
+/**
+ * Model LegalSection
+ * 
+ */
+export type LegalSection = Prisma.LegalSectionModel
+/**
+ * Model CookieCategory
+ * 
+ */
+export type CookieCategory = Prisma.CookieCategoryModel
+/**
  * Model VolunteerApplication
  * 
  */
 export type VolunteerApplication = Prisma.VolunteerApplicationModel
+/**
+ * Model HomePage
+ * 
+ */
+export type HomePage = Prisma.HomePageModel
+/**
+ * Model HomeStep
+ * 
+ */
+export type HomeStep = Prisma.HomeStepModel
+/**
+ * Model HomeTestimonial
+ * 
+ */
+export type HomeTestimonial = Prisma.HomeTestimonialModel
+/**
+ * Model HomeGalleryImage
+ * 
+ */
+export type HomeGalleryImage = Prisma.HomeGalleryImageModel
+/**
+ * Model TestimonialsPage
+ * 
+ */
+export type TestimonialsPage = Prisma.TestimonialsPageModel
+/**
+ * Model TestimonialCard
+ * 
+ */
+export type TestimonialCard = Prisma.TestimonialCardModel

@@ -1,16 +1,7 @@
 import { isNonEmptyString, isValidDate } from "../../lib/validators.js";
 
-export const PROJECT_STATUSES = ["ACTIVE", "COMPLETED"] as const;
-export type ProjectStatusValue = (typeof PROJECT_STATUSES)[number];
-
-const RICH_CONTENT_KEYS = [
-    "overview",
-    "objectives",
-    "activities",
-    "requirements",
-    "impact",
-    "additionalInfo",
-] as const;
+export const PROJECT_SCOPES = ["NAZIONALE", "INTERNAZIONALE"] as const;
+export type ProjectScopeValue = (typeof PROJECT_SCOPES)[number];
 
 export function validateProjectInput(
     body: Record<string, unknown>,
@@ -34,9 +25,13 @@ export function validateProjectInput(
         }
     }
 
-    if (body.status !== undefined) {
-        if (!PROJECT_STATUSES.includes(body.status as ProjectStatusValue)) {
-            return `Status must be one of: ${PROJECT_STATUSES.join(", ")}`;
+    if (!isUpdate && body.scope === undefined) {
+        return `Scope is required and must be one of: ${PROJECT_SCOPES.join(", ")}`;
+    }
+
+    if (body.scope !== undefined) {
+        if (!PROJECT_SCOPES.includes(body.scope as ProjectScopeValue)) {
+            return `Scope must be one of: ${PROJECT_SCOPES.join(", ")}`;
         }
     }
 
@@ -64,36 +59,4 @@ export function validateProjectInput(
     }
 
     return null;
-}
-
-export function normalizeRichContent(input: unknown): Record<string, string> | undefined {
-    if (input === undefined || input === null || input === "") {
-        return undefined;
-    }
-
-    let parsed: unknown = input;
-
-    if (typeof input === "string") {
-        try {
-            parsed = JSON.parse(input);
-        } catch {
-            throw new Error("richContent must be a valid JSON object");
-        }
-    }
-
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
-        throw new Error("richContent must be a JSON object");
-    }
-
-    const result: Record<string, string> = {};
-
-    for (const key of RICH_CONTENT_KEYS) {
-        const value = (parsed as Record<string, unknown>)[key];
-
-        if (typeof value === "string" && value.trim().length > 0) {
-            result[key] = value;
-        }
-    }
-
-    return result;
 }

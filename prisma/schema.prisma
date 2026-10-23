@@ -33,9 +33,10 @@ model TeamMember {
   id          Int      @id @default(autoincrement())
   name        String
   surname     String
+  role        String?
   email       String
   phoneNumber String
-  image       String
+  image       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -65,39 +66,143 @@ model ContactInfo {
   updatedAt DateTime @updatedAt
 }
 
-enum ProjectStatus {
-  ACTIVE
-  COMPLETED
+model AboutPage {
+  id                Int      @id @default(autoincrement())
+  title             String
+  titleEn           String?
+  description       String   @db.Text
+  descriptionEn     String?  @db.Text
+  longDescription   String?  @db.Text
+  longDescriptionEn String?  @db.Text
+  sede              String
+  legalForm         String
+  legalFormEn       String?
+  updatedAt         DateTime @updatedAt
+}
+
+model AboutGalleryImage {
+  id        Int      @id @default(autoincrement())
+  image     String
+  caption   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AboutGoal {
+  id        Int      @id @default(autoincrement())
+  title     String
+  titleEn   String?
+  text      String   @db.Text
+  textEn    String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NetworkPartner {
+  id         Int      @id @default(autoincrement())
+  title      String
+  titleEn    String?
+  subtitle   String?
+  subtitleEn String?
+  image      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum ProjectScope {
+  NAZIONALE
+  INTERNAZIONALE
 }
 
 model Project {
-  id               Int           @id @default(autoincrement())
-  title            String
-  slug             String        @unique
-  shortDescription String
-  description      String        @db.Text
-  mainImage        String
-  documentUrl      String?
-  projectCode      String?
-  category         String?
-  status           ProjectStatus @default(ACTIVE)
-  location         String?
-  startDate        DateTime?
-  endDate          DateTime?
-  beneficiaries    String?       @db.Text
-  funding          String?       @db.Text
-  richContent      Json?
-  deletedAt        DateTime?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id                 Int          @id @default(autoincrement())
+  title              String
+  titleEn            String?
+  slug               String       @unique
+  shortDescription   String
+  shortDescriptionEn String?
+  description        String       @db.Text
+  descriptionEn      String?      @db.Text
+  mainImage          String
+  documentUrl        String?
+  category           String?
+  scope              ProjectScope @default(NAZIONALE)
+  location           String?
+  locationEn         String?
+  startDate          DateTime?
+  endDate            DateTime?
+  whoCanJoin         String?      @db.Text
+  whoCanJoinEn       String?      @db.Text
+  deletedAt          DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
 
+  images                ProjectImage[]
   volunteerApplications VolunteerApplication[]
+  testimonialCards      TestimonialCard[]
 
   @@index([slug])
-  @@index([status])
+  @@index([scope])
   @@index([startDate])
   @@index([endDate])
   @@index([deletedAt])
+}
+
+model ProjectImage {
+  id        Int      @id @default(autoincrement())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+  image     String
+  caption   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+enum LegalPageKey {
+  PRIVACY_POLICY
+  COOKIE_POLICY
+}
+
+model LegalPage {
+  id          Int            @id @default(autoincrement())
+  key         LegalPageKey   @unique
+  title       String
+  intro       String         @db.Text
+  bannerTitle String?
+  bannerText  String?        @db.Text
+  updatedAt   DateTime       @updatedAt
+  sections    LegalSection[]
+}
+
+model LegalSection {
+  id          Int       @id @default(autoincrement())
+  legalPage   LegalPage @relation(fields: [legalPageId], references: [id], onDelete: Cascade)
+  legalPageId Int
+  order       Int
+  title       String
+  content     String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([legalPageId])
+}
+
+enum CookieCategoryKey {
+  NECESSARI
+  STATISTICI
+  MARKETING
+}
+
+model CookieCategory {
+  id        Int               @id @default(autoincrement())
+  key       CookieCategoryKey @unique
+  name      String
+  purpose   String
+  duration  String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }
 
 enum Gender {
@@ -128,7 +233,7 @@ model VolunteerApplication {
   email                         String
   phoneNumber                   String
   hasPassport                   Boolean
-  travelDocumentValidForCountry Boolean
+  travelDocumentValidForCountry Boolean?
   motivation                    String     @db.Text
   isFirstExperience             Boolean
   howDidYouFindUs               String
@@ -143,4 +248,93 @@ model VolunteerApplication {
   @@index([projectId])
   @@index([email])
   @@index([createdAt])
+}
+
+model HomePage {
+  id                  Int      @id @default(autoincrement())
+  stepsEyebrow        String   @default("Come funziona")
+  stepsTitle          String
+  aboutTeaserEyebrow  String   @default("Chi siamo")
+  aboutTeaserTitle    String
+  aboutTeaserText     String   @db.Text
+  testimonialsEyebrow String   @default("Testimonianze")
+  testimonialsTitle   String
+  fundersEyebrow      String   @default("Enti finanziatori")
+  fundersIntroText    String
+  updatedAt           DateTime @updatedAt
+}
+
+model HomeStep {
+  id        Int      @id @default(autoincrement())
+  order     Int
+  title     String
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomeTestimonial {
+  id        Int      @id @default(autoincrement())
+  order     Int
+  quote     String   @db.Text
+  name      String
+  context   String
+  variant   String   @default("light")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum HomeGallerySlot {
+  GROUP
+  ACTIVITY
+  TRAVEL
+}
+
+model HomeGalleryImage {
+  id        Int             @id @default(autoincrement())
+  slot      HomeGallerySlot @unique
+  image     String
+  caption   String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model TestimonialsPage {
+  id          Int      @id @default(autoincrement())
+  heroEyebrow String   @default("Testimonianze")
+  heroQuote   String   @db.Text
+  heroName    String
+  heroCountry String
+  heroContext String
+  ctaText     String   @default("Sei appena tornato da un progetto? Raccontacelo.")
+  updatedAt   DateTime @updatedAt
+}
+
+enum TestimonialCardVariant {
+  LIGHT
+  YELLOW
+  DARK
+  VIDEO
+}
+
+enum TestimonialCardStatus {
+  PENDING
+  APPROVED
+}
+
+model TestimonialCard {
+  id        Int                    @id @default(autoincrement())
+  order     Int
+  variant   TestimonialCardVariant @default(LIGHT)
+  tag       String?
+  quote     String?                @db.Text
+  author    String
+  videoUrl  String?
+  status    TestimonialCardStatus  @default(APPROVED)
+  project   Project?               @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  projectId Int?
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+
+  @@index([projectId])
 }

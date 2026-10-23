@@ -3,7 +3,9 @@ import { uploadFinancingEntityImage } from "./financing-entity.upload.js";
 import {
     createFinancingEntityController,
     deleteFinancingEntityController,
+    exportFinancingEntitiesController,
     getFinancingEntityController,
+    listFinancingEntitiesAdminController,
     listFinancingEntitiesController,
     updateFinancingEntityController,
 } from "./financing-entity.controller.js";
@@ -18,7 +20,8 @@ adminRouter.post(
     uploadFinancingEntityImage.single("image"),
     createFinancingEntityController
 );
-adminRouter.get("/", listFinancingEntitiesController);
+adminRouter.get("/", listFinancingEntitiesAdminController);
+adminRouter.get("/export", exportFinancingEntitiesController);
 adminRouter.get("/:id", getFinancingEntityController);
 adminRouter.put(
     "/:id",

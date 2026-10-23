@@ -1,14 +1,16 @@
 import multer from "multer";
 import path from "path";
 import crypto from "crypto";
+import fs from "fs";
+import { createImageUpload } from "../../lib/upload.js";
+
+export const uploadProjectGalleryImage = createImageUpload("project-gallery");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        if (file.fieldname === "document") {
-            return cb(null, "uploads/documents");
-        }
-
-        cb(null, "uploads/projects");
+        const dir = file.fieldname === "document" ? "uploads/documents" : "uploads/projects";
+        fs.mkdirSync(dir, { recursive: true });
+        cb(null, dir);
     },
 
     filename: (_req, file, cb) => {

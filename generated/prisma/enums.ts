@@ -26,12 +26,29 @@ export const StaticPageKey = {
 export type StaticPageKey = (typeof StaticPageKey)[keyof typeof StaticPageKey]
 
 
-export const ProjectStatus = {
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED'
+export const ProjectScope = {
+  NAZIONALE: 'NAZIONALE',
+  INTERNAZIONALE: 'INTERNAZIONALE'
 } as const
 
-export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+export type ProjectScope = (typeof ProjectScope)[keyof typeof ProjectScope]
+
+
+export const LegalPageKey = {
+  PRIVACY_POLICY: 'PRIVACY_POLICY',
+  COOKIE_POLICY: 'COOKIE_POLICY'
+} as const
+
+export type LegalPageKey = (typeof LegalPageKey)[keyof typeof LegalPageKey]
+
+
+export const CookieCategoryKey = {
+  NECESSARI: 'NECESSARI',
+  STATISTICI: 'STATISTICI',
+  MARKETING: 'MARKETING'
+} as const
+
+export type CookieCategoryKey = (typeof CookieCategoryKey)[keyof typeof CookieCategoryKey]
 
 
 export const Gender = {
@@ -53,3 +70,30 @@ export const TshirtSize = {
 } as const
 
 export type TshirtSize = (typeof TshirtSize)[keyof typeof TshirtSize]
+
+
+export const HomeGallerySlot = {
+  GROUP: 'GROUP',
+  ACTIVITY: 'ACTIVITY',
+  TRAVEL: 'TRAVEL'
+} as const
+
+export type HomeGallerySlot = (typeof HomeGallerySlot)[keyof typeof HomeGallerySlot]
+
+
+export const TestimonialCardVariant = {
+  LIGHT: 'LIGHT',
+  YELLOW: 'YELLOW',
+  DARK: 'DARK',
+  VIDEO: 'VIDEO'
+} as const
+
+export type TestimonialCardVariant = (typeof TestimonialCardVariant)[keyof typeof TestimonialCardVariant]
+
+
+export const TestimonialCardStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED'
+} as const
+
+export type TestimonialCardStatus = (typeof TestimonialCardStatus)[keyof typeof TestimonialCardStatus]

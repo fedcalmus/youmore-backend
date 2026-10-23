@@ -1,26 +1,47 @@
 import prisma from "../../lib/prisma.js";
 import { slugify } from "../../lib/slug.js";
+import { sanitizeRichText } from "../../lib/sanitize.js";
+import { withAutoTranslate } from "../../lib/translate.js";
 import type { PaginationRequest } from "../../lib/pagination.js";
+
+const projectImagesSelect = {
+    images: {
+        select: { id: true, image: true, caption: true },
+        orderBy: { createdAt: "asc" },
+    },
+} as const;
+
+const projectTestimonialsSelect = {
+    testimonialCards: {
+        where: { status: "APPROVED" as const },
+        select: { id: true, order: true, variant: true, tag: true, quote: true, author: true, videoUrl: true },
+        orderBy: { order: "asc" as const },
+    },
+} as const;
 
 const publicProjectSelect = {
     id: true,
     title: true,
+    titleEn: true,
     slug: true,
     shortDescription: true,
+    shortDescriptionEn: true,
     description: true,
+    descriptionEn: true,
     mainImage: true,
     documentUrl: true,
-    projectCode: true,
     category: true,
-    status: true,
+    scope: true,
     location: true,
+    locationEn: true,
     startDate: true,
     endDate: true,
-    beneficiaries: true,
-    funding: true,
-    richContent: true,
+    whoCanJoin: true,
+    whoCanJoinEn: true,
     createdAt: true,
     updatedAt: true,
+    ...projectImagesSelect,
+    ...projectTestimonialsSelect,
 } as const;
 
 const adminProjectListSelect = {
@@ -50,51 +71,70 @@ export async function generateUniqueSlug(title: string, excludeId?: number) {
     }
 }
 
-export interface ProjectInput {
+export type ProjectInput = {
     title: string;
+    titleEn?: string;
     shortDescription: string;
+    shortDescriptionEn?: string;
     description: string;
+    descriptionEn?: string;
     mainImage: string;
     documentUrl?: string | null;
-    projectCode?: string | null;
     category?: string | null;
-    status?: "ACTIVE" | "COMPLETED";
+    scope?: "NAZIONALE" | "INTERNAZIONALE";
     location?: string | null;
+    locationEn?: string;
     startDate?: Date | null;
     endDate?: Date | null;
-    beneficiaries?: string | null;
-    funding?: string | null;
-    richContent?: Record<string, string>;
-}
+    whoCanJoin?: string | null;
+    whoCanJoinEn?: string;
+};
+
+const TRANSLATABLE_PROJECT_FIELDS = ["title", "shortDescription", "description", "location", "whoCanJoin"] as const;
 
 export async function createProject(input: ProjectInput) {
     const slug = await generateUniqueSlug(input.title);
+    const translated = await withAutoTranslate(input, TRANSLATABLE_PROJECT_FIELDS);
 
     return prisma.project.create({
         data: {
             title: input.title,
+            titleEn: translated.titleEn ?? null,
             slug,
             shortDescription: input.shortDescription,
-            description: input.description,
+            shortDescriptionEn: translated.shortDescriptionEn ?? null,
+            description: sanitizeRichText(input.description),
+            descriptionEn: translated.descriptionEn ? sanitizeRichText(translated.descriptionEn) : null,
             mainImage: input.mainImage,
             documentUrl: input.documentUrl ?? null,
-            projectCode: input.projectCode ?? null,
             category: input.category ?? null,
-            status: input.status ?? "ACTIVE",
+            scope: input.scope ?? "NAZIONALE",
             location: input.location ?? null,
+            locationEn: translated.locationEn ?? null,
             startDate: input.startDate ?? null,
             endDate: input.endDate ?? null,
-            beneficiaries: input.beneficiaries ?? null,
-            funding: input.funding ?? null,
-            richContent: input.richContent ?? undefined,
+            whoCanJoin: input.whoCanJoin ?? null,
+            whoCanJoinEn: translated.whoCanJoinEn ?? null,
         },
     });
 }
 
 export async function updateProject(id: number, input: Partial<ProjectInput>) {
+    const translated = await withAutoTranslate(input, TRANSLATABLE_PROJECT_FIELDS);
+
+    const data: Record<string, unknown> = { ...input };
+
+    for (const field of TRANSLATABLE_PROJECT_FIELDS) {
+        const enKey = `${field}En`;
+        if (enKey in translated) data[enKey] = translated[enKey] ?? null;
+    }
+
+    if (data.description !== undefined) data.description = sanitizeRichText(data.description as string);
+    if (data.descriptionEn) data.descriptionEn = sanitizeRichText(data.descriptionEn as string);
+
     return prisma.project.update({
         where: { id },
-        data: input,
+        data,
     });
 }
 
@@ -142,14 +182,39 @@ export async function listProjectsPublic(pagination: PaginationRequest) {
     return { items, totalItems };
 }
 
-export async function listProjectsAdmin(pagination: PaginationRequest) {
-    const where = { deletedAt: null };
+export interface ProjectListFilters {
+    search: string;
+    sortBy: string;
+    sortOrder: "asc" | "desc";
+    scope?: string;
+    category?: string;
+}
+
+function buildProjectWhere(filters: Pick<ProjectListFilters, "search" | "scope" | "category">) {
+    return {
+        deletedAt: null,
+        ...(filters.scope ? { scope: filters.scope as "NAZIONALE" | "INTERNAZIONALE" } : {}),
+        ...(filters.category ? { category: filters.category } : {}),
+        ...(filters.search
+            ? {
+                  OR: [
+                      { title: { contains: filters.search, mode: "insensitive" as const } },
+                      { shortDescription: { contains: filters.search, mode: "insensitive" as const } },
+                      { location: { contains: filters.search, mode: "insensitive" as const } },
+                  ],
+              }
+            : {}),
+    };
+}
+
+export async function listProjectsAdmin(pagination: PaginationRequest, filters: ProjectListFilters) {
+    const where = buildProjectWhere(filters);
 
     const [items, totalItems] = await Promise.all([
         prisma.project.findMany({
             where,
             select: adminProjectListSelect,
-            orderBy: { createdAt: "desc" },
+            orderBy: { [filters.sortBy]: filters.sortOrder },
             skip: pagination.skip,
             take: pagination.take,
         }),
@@ -157,6 +222,29 @@ export async function listProjectsAdmin(pagination: PaginationRequest) {
     ]);
 
     return { items, totalItems };
+}
+
+const exportProjectSelect = {
+    title: true,
+    shortDescription: true,
+    category: true,
+    scope: true,
+    location: true,
+    startDate: true,
+    endDate: true,
+    whoCanJoin: true,
+    createdAt: true,
+    _count: { select: { volunteerApplications: true } },
+} as const;
+
+export async function listProjectsForExport(filters: ProjectListFilters) {
+    const where = buildProjectWhere(filters);
+
+    return prisma.project.findMany({
+        where,
+        select: exportProjectSelect,
+        orderBy: { [filters.sortBy]: filters.sortOrder },
+    });
 }
 
 const volunteerListSelect = {
@@ -188,4 +276,32 @@ export async function listProjectVolunteers(
     ]);
 
     return { items, totalItems };
+}
+
+export async function getProjectImageById(id: number) {
+    return prisma.projectImage.findUnique({
+        where: { id },
+    });
+}
+
+export async function createProjectImage(projectId: number, image: string, caption?: string | null) {
+    return prisma.projectImage.create({
+        data: { projectId, image, caption: caption ?? null },
+    });
+}
+
+export async function updateProjectImage(
+    id: number,
+    data: { image?: string; caption?: string | null }
+) {
+    return prisma.projectImage.update({
+        where: { id },
+        data,
+    });
+}
+
+export async function deleteProjectImage(id: number) {
+    return prisma.projectImage.delete({
+        where: { id },
+    });
 }

@@ -20,6 +20,30 @@ export async function listFinancingEntities() {
     });
 }
 
+export interface FinancingEntityListFilters {
+    search: string;
+    sortBy: string;
+    sortOrder: "asc" | "desc";
+}
+
+function buildFinancingEntityWhere(filters: Pick<FinancingEntityListFilters, "search">) {
+    return filters.search
+        ? {
+              OR: [
+                  { name: { contains: filters.search, mode: "insensitive" as const } },
+                  { url: { contains: filters.search, mode: "insensitive" as const } },
+              ],
+          }
+        : {};
+}
+
+export async function listFinancingEntitiesAdmin(filters: FinancingEntityListFilters) {
+    return prisma.financingEntity.findMany({
+        where: buildFinancingEntityWhere(filters),
+        orderBy: { [filters.sortBy]: filters.sortOrder },
+    });
+}
+
 export async function getFinancingEntityById(id: number) {
     return prisma.financingEntity.findUnique({
         where: { id },

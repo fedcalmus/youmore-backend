@@ -297,7 +297,7 @@ export type VolunteerApplicationGroupByOutputType = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -345,7 +345,7 @@ export type VolunteerApplicationWhereInput = {
   email?: Prisma.StringFilter<"VolunteerApplication"> | string
   phoneNumber?: Prisma.StringFilter<"VolunteerApplication"> | string
   hasPassport?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
+  travelDocumentValidForCountry?: Prisma.BoolNullableFilter<"VolunteerApplication"> | boolean | null
   motivation?: Prisma.StringFilter<"VolunteerApplication"> | string
   isFirstExperience?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
   howDidYouFindUs?: Prisma.StringFilter<"VolunteerApplication"> | string
@@ -371,7 +371,7 @@ export type VolunteerApplicationOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   hasPassport?: Prisma.SortOrder
-  travelDocumentValidForCountry?: Prisma.SortOrder
+  travelDocumentValidForCountry?: Prisma.SortOrderInput | Prisma.SortOrder
   motivation?: Prisma.SortOrder
   isFirstExperience?: Prisma.SortOrder
   howDidYouFindUs?: Prisma.SortOrder
@@ -400,7 +400,7 @@ export type VolunteerApplicationWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"VolunteerApplication"> | string
   phoneNumber?: Prisma.StringFilter<"VolunteerApplication"> | string
   hasPassport?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
+  travelDocumentValidForCountry?: Prisma.BoolNullableFilter<"VolunteerApplication"> | boolean | null
   motivation?: Prisma.StringFilter<"VolunteerApplication"> | string
   isFirstExperience?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
   howDidYouFindUs?: Prisma.StringFilter<"VolunteerApplication"> | string
@@ -426,7 +426,7 @@ export type VolunteerApplicationOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   hasPassport?: Prisma.SortOrder
-  travelDocumentValidForCountry?: Prisma.SortOrder
+  travelDocumentValidForCountry?: Prisma.SortOrderInput | Prisma.SortOrder
   motivation?: Prisma.SortOrder
   isFirstExperience?: Prisma.SortOrder
   howDidYouFindUs?: Prisma.SortOrder
@@ -459,7 +459,7 @@ export type VolunteerApplicationScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"VolunteerApplication"> | string
   phoneNumber?: Prisma.StringWithAggregatesFilter<"VolunteerApplication"> | string
   hasPassport?: Prisma.BoolWithAggregatesFilter<"VolunteerApplication"> | boolean
-  travelDocumentValidForCountry?: Prisma.BoolWithAggregatesFilter<"VolunteerApplication"> | boolean
+  travelDocumentValidForCountry?: Prisma.BoolNullableWithAggregatesFilter<"VolunteerApplication"> | boolean | null
   motivation?: Prisma.StringWithAggregatesFilter<"VolunteerApplication"> | string
   isFirstExperience?: Prisma.BoolWithAggregatesFilter<"VolunteerApplication"> | boolean
   howDidYouFindUs?: Prisma.StringWithAggregatesFilter<"VolunteerApplication"> | string
@@ -482,7 +482,7 @@ export type VolunteerApplicationCreateInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -508,7 +508,7 @@ export type VolunteerApplicationUncheckedCreateInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -531,7 +531,7 @@ export type VolunteerApplicationUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -557,7 +557,7 @@ export type VolunteerApplicationUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -582,7 +582,7 @@ export type VolunteerApplicationCreateManyInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -605,7 +605,7 @@ export type VolunteerApplicationUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -630,7 +630,7 @@ export type VolunteerApplicationUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -788,6 +788,10 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type EnumTshirtSizeFieldUpdateOperationsInput = {
   set?: $Enums.TshirtSize
 }
@@ -802,7 +806,7 @@ export type VolunteerApplicationCreateWithoutProjectInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -826,7 +830,7 @@ export type VolunteerApplicationUncheckedCreateWithoutProjectInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -880,7 +884,7 @@ export type VolunteerApplicationScalarWhereInput = {
   email?: Prisma.StringFilter<"VolunteerApplication"> | string
   phoneNumber?: Prisma.StringFilter<"VolunteerApplication"> | string
   hasPassport?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
+  travelDocumentValidForCountry?: Prisma.BoolNullableFilter<"VolunteerApplication"> | boolean | null
   motivation?: Prisma.StringFilter<"VolunteerApplication"> | string
   isFirstExperience?: Prisma.BoolFilter<"VolunteerApplication"> | boolean
   howDidYouFindUs?: Prisma.StringFilter<"VolunteerApplication"> | string
@@ -904,7 +908,7 @@ export type VolunteerApplicationCreateManyProjectInput = {
   email: string
   phoneNumber: string
   hasPassport: boolean
-  travelDocumentValidForCountry: boolean
+  travelDocumentValidForCountry?: boolean | null
   motivation: string
   isFirstExperience: boolean
   howDidYouFindUs: string
@@ -927,7 +931,7 @@ export type VolunteerApplicationUpdateWithoutProjectInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -951,7 +955,7 @@ export type VolunteerApplicationUncheckedUpdateWithoutProjectInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -975,7 +979,7 @@ export type VolunteerApplicationUncheckedUpdateManyWithoutProjectInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phoneNumber?: Prisma.StringFieldUpdateOperationsInput | string
   hasPassport?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  travelDocumentValidForCountry?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  travelDocumentValidForCountry?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   motivation?: Prisma.StringFieldUpdateOperationsInput | string
   isFirstExperience?: Prisma.BoolFieldUpdateOperationsInput | boolean
   howDidYouFindUs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1121,7 +1125,7 @@ export type $VolunteerApplicationPayload<ExtArgs extends runtime.Types.Extension
     email: string
     phoneNumber: string
     hasPassport: boolean
-    travelDocumentValidForCountry: boolean
+    travelDocumentValidForCountry: boolean | null
     motivation: string
     isFirstExperience: boolean
     howDidYouFindUs: string

@@ -4,9 +4,24 @@ import {
     createVolunteerApplication,
     getVolunteerApplicationById,
     listVolunteerApplications,
+    listVolunteerApplicationsForExport,
 } from "./volunteer.service.js";
 import { getProjectBySlugPublic } from "../projects/project.service.js";
 import { buildPaginationMeta, getPagination } from "../../lib/pagination.js";
+import { parseListQuery } from "../../lib/query.js";
+import { toCsv } from "../../lib/csv.js";
+
+const VOLUNTEER_SORT_FIELDS = ["name", "surname", "city", "createdAt"] as const;
+
+function parseVolunteerFilters(query: Record<string, unknown>) {
+    const listQuery = parseListQuery(query, VOLUNTEER_SORT_FIELDS, "createdAt");
+    const rawProjectId = typeof query.projectId === "string" ? Number(query.projectId) : undefined;
+
+    return {
+        ...listQuery,
+        projectId: rawProjectId && Number.isFinite(rawProjectId) ? rawProjectId : undefined,
+    };
+}
 
 export async function createVolunteerApplicationController(req: Request, res: Response) {
     try {
@@ -16,7 +31,7 @@ export async function createVolunteerApplicationController(req: Request, res: Re
             return res.status(404).json({ message: "Project not found" });
         }
 
-        if (project.status !== "ACTIVE") {
+        if (project.endDate && project.endDate < new Date()) {
             return res.status(400).json({
                 message: "This project is not currently accepting applications",
             });
@@ -62,12 +77,55 @@ export async function createVolunteerApplicationController(req: Request, res: Re
 export async function listVolunteerApplicationsController(req: Request, res: Response) {
     try {
         const pagination = getPagination(req.query);
-        const { items, totalItems } = await listVolunteerApplications(pagination);
+        const filters = parseVolunteerFilters(req.query);
+        const { items, totalItems } = await listVolunteerApplications(pagination, filters);
 
         return res.json({
             data: items,
             pagination: buildPaginationMeta(pagination.page, pagination.limit, totalItems),
         });
+    } catch (error) {
+        return res.status(500).json({ message: (error as Error).message });
+    }
+}
+
+export async function exportVolunteerApplicationsController(req: Request, res: Response) {
+    try {
+        const filters = parseVolunteerFilters(req.query);
+        const items = await listVolunteerApplicationsForExport(filters);
+
+        const csv = toCsv(
+            items.map((v) => ({
+                name: v.name,
+                surname: v.surname,
+                email: v.email,
+                phoneNumber: v.phoneNumber,
+                city: v.city,
+                citizenship: v.citizenship,
+                gender: v.gender,
+                dateOfBirth: v.dateOfBirth.toISOString().slice(0, 10),
+                tshirtSize: v.tshirtSize,
+                project: v.project.title,
+                createdAt: v.createdAt.toISOString().slice(0, 10),
+            })),
+            [
+                { key: "name", header: "Name" },
+                { key: "surname", header: "Surname" },
+                { key: "email", header: "Email" },
+                { key: "phoneNumber", header: "Phone" },
+                { key: "city", header: "City" },
+                { key: "citizenship", header: "Citizenship" },
+                { key: "gender", header: "Gender" },
+                { key: "dateOfBirth", header: "Date of Birth" },
+                { key: "tshirtSize", header: "T-shirt Size" },
+                { key: "project", header: "Project" },
+                { key: "createdAt", header: "Applied At" },
+            ]
+        );
+
+        res.setHeader("Content-Type", "text/csv; charset=utf-8");
+        res.setHeader("Content-Disposition", 'attachment; filename="volunteers.csv"');
+        return res.send(csv);
     } catch (error) {
         return res.status(500).json({ message: (error as Error).message });
     }

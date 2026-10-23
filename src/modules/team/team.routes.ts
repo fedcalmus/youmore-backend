@@ -3,7 +3,9 @@ import { uploadTeamMemberImage } from "./team.upload.js";
 import {
     createTeamMemberController,
     deleteTeamMemberController,
+    exportTeamMembersController,
     getTeamMemberController,
+    listTeamMembersAdminController,
     listTeamMembersController,
     updateTeamMemberController,
 } from "./team.controller.js";
@@ -18,7 +20,8 @@ adminRouter.post(
     uploadTeamMemberImage.single("image"),
     createTeamMemberController
 );
-adminRouter.get("/", listTeamMembersController);
+adminRouter.get("/", listTeamMembersAdminController);
+adminRouter.get("/export", exportTeamMembersController);
 adminRouter.get("/:id", getTeamMemberController);
 adminRouter.put(
     "/:id",

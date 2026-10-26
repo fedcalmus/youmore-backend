@@ -8,6 +8,9 @@
     "dev": "tsx src/server.ts",
     "start": "tsx src/server.ts"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

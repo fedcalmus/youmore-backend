@@ -36,6 +36,7 @@ export type HomePageSumAggregateOutputType = {
 
 export type HomePageMinAggregateOutputType = {
   id: number | null
+  heroBadge: string | null
   stepsEyebrow: string | null
   stepsTitle: string | null
   aboutTeaserEyebrow: string | null
@@ -50,6 +51,7 @@ export type HomePageMinAggregateOutputType = {
 
 export type HomePageMaxAggregateOutputType = {
   id: number | null
+  heroBadge: string | null
   stepsEyebrow: string | null
   stepsTitle: string | null
   aboutTeaserEyebrow: string | null
@@ -64,6 +66,7 @@ export type HomePageMaxAggregateOutputType = {
 
 export type HomePageCountAggregateOutputType = {
   id: number
+  heroBadge: number
   stepsEyebrow: number
   stepsTitle: number
   aboutTeaserEyebrow: number
@@ -88,6 +91,7 @@ export type HomePageSumAggregateInputType = {
 
 export type HomePageMinAggregateInputType = {
   id?: true
+  heroBadge?: true
   stepsEyebrow?: true
   stepsTitle?: true
   aboutTeaserEyebrow?: true
@@ -102,6 +106,7 @@ export type HomePageMinAggregateInputType = {
 
 export type HomePageMaxAggregateInputType = {
   id?: true
+  heroBadge?: true
   stepsEyebrow?: true
   stepsTitle?: true
   aboutTeaserEyebrow?: true
@@ -116,6 +121,7 @@ export type HomePageMaxAggregateInputType = {
 
 export type HomePageCountAggregateInputType = {
   id?: true
+  heroBadge?: true
   stepsEyebrow?: true
   stepsTitle?: true
   aboutTeaserEyebrow?: true
@@ -217,6 +223,7 @@ export type HomePageGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type HomePageGroupByOutputType = {
   id: number
+  heroBadge: string
   stepsEyebrow: string
   stepsTitle: string
   aboutTeaserEyebrow: string
@@ -254,6 +261,7 @@ export type HomePageWhereInput = {
   OR?: Prisma.HomePageWhereInput[]
   NOT?: Prisma.HomePageWhereInput | Prisma.HomePageWhereInput[]
   id?: Prisma.IntFilter<"HomePage"> | number
+  heroBadge?: Prisma.StringFilter<"HomePage"> | string
   stepsEyebrow?: Prisma.StringFilter<"HomePage"> | string
   stepsTitle?: Prisma.StringFilter<"HomePage"> | string
   aboutTeaserEyebrow?: Prisma.StringFilter<"HomePage"> | string
@@ -268,6 +276,7 @@ export type HomePageWhereInput = {
 
 export type HomePageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  heroBadge?: Prisma.SortOrder
   stepsEyebrow?: Prisma.SortOrder
   stepsTitle?: Prisma.SortOrder
   aboutTeaserEyebrow?: Prisma.SortOrder
@@ -285,6 +294,7 @@ export type HomePageWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.HomePageWhereInput | Prisma.HomePageWhereInput[]
   OR?: Prisma.HomePageWhereInput[]
   NOT?: Prisma.HomePageWhereInput | Prisma.HomePageWhereInput[]
+  heroBadge?: Prisma.StringFilter<"HomePage"> | string
   stepsEyebrow?: Prisma.StringFilter<"HomePage"> | string
   stepsTitle?: Prisma.StringFilter<"HomePage"> | string
   aboutTeaserEyebrow?: Prisma.StringFilter<"HomePage"> | string
@@ -299,6 +309,7 @@ export type HomePageWhereUniqueInput = Prisma.AtLeast<{
 
 export type HomePageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  heroBadge?: Prisma.SortOrder
   stepsEyebrow?: Prisma.SortOrder
   stepsTitle?: Prisma.SortOrder
   aboutTeaserEyebrow?: Prisma.SortOrder
@@ -321,6 +332,7 @@ export type HomePageScalarWhereWithAggregatesInput = {
   OR?: Prisma.HomePageScalarWhereWithAggregatesInput[]
   NOT?: Prisma.HomePageScalarWhereWithAggregatesInput | Prisma.HomePageScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"HomePage"> | number
+  heroBadge?: Prisma.StringWithAggregatesFilter<"HomePage"> | string
   stepsEyebrow?: Prisma.StringWithAggregatesFilter<"HomePage"> | string
   stepsTitle?: Prisma.StringWithAggregatesFilter<"HomePage"> | string
   aboutTeaserEyebrow?: Prisma.StringWithAggregatesFilter<"HomePage"> | string
@@ -334,6 +346,7 @@ export type HomePageScalarWhereWithAggregatesInput = {
 }
 
 export type HomePageCreateInput = {
+  heroBadge?: string
   stepsEyebrow?: string
   stepsTitle: string
   aboutTeaserEyebrow?: string
@@ -348,6 +361,7 @@ export type HomePageCreateInput = {
 
 export type HomePageUncheckedCreateInput = {
   id?: number
+  heroBadge?: string
   stepsEyebrow?: string
   stepsTitle: string
   aboutTeaserEyebrow?: string
@@ -361,6 +375,7 @@ export type HomePageUncheckedCreateInput = {
 }
 
 export type HomePageUpdateInput = {
+  heroBadge?: Prisma.StringFieldUpdateOperationsInput | string
   stepsEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   stepsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   aboutTeaserEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
@@ -375,6 +390,7 @@ export type HomePageUpdateInput = {
 
 export type HomePageUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  heroBadge?: Prisma.StringFieldUpdateOperationsInput | string
   stepsEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   stepsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   aboutTeaserEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
@@ -389,6 +405,7 @@ export type HomePageUncheckedUpdateInput = {
 
 export type HomePageCreateManyInput = {
   id?: number
+  heroBadge?: string
   stepsEyebrow?: string
   stepsTitle: string
   aboutTeaserEyebrow?: string
@@ -402,6 +419,7 @@ export type HomePageCreateManyInput = {
 }
 
 export type HomePageUpdateManyMutationInput = {
+  heroBadge?: Prisma.StringFieldUpdateOperationsInput | string
   stepsEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   stepsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   aboutTeaserEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
@@ -416,6 +434,7 @@ export type HomePageUpdateManyMutationInput = {
 
 export type HomePageUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  heroBadge?: Prisma.StringFieldUpdateOperationsInput | string
   stepsEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   stepsTitle?: Prisma.StringFieldUpdateOperationsInput | string
   aboutTeaserEyebrow?: Prisma.StringFieldUpdateOperationsInput | string
@@ -430,6 +449,7 @@ export type HomePageUncheckedUpdateManyInput = {
 
 export type HomePageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  heroBadge?: Prisma.SortOrder
   stepsEyebrow?: Prisma.SortOrder
   stepsTitle?: Prisma.SortOrder
   aboutTeaserEyebrow?: Prisma.SortOrder
@@ -448,6 +468,7 @@ export type HomePageAvgOrderByAggregateInput = {
 
 export type HomePageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  heroBadge?: Prisma.SortOrder
   stepsEyebrow?: Prisma.SortOrder
   stepsTitle?: Prisma.SortOrder
   aboutTeaserEyebrow?: Prisma.SortOrder
@@ -462,6 +483,7 @@ export type HomePageMaxOrderByAggregateInput = {
 
 export type HomePageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  heroBadge?: Prisma.SortOrder
   stepsEyebrow?: Prisma.SortOrder
   stepsTitle?: Prisma.SortOrder
   aboutTeaserEyebrow?: Prisma.SortOrder
@@ -482,6 +504,7 @@ export type HomePageSumOrderByAggregateInput = {
 
 export type HomePageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  heroBadge?: boolean
   stepsEyebrow?: boolean
   stepsTitle?: boolean
   aboutTeaserEyebrow?: boolean
@@ -496,6 +519,7 @@ export type HomePageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type HomePageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  heroBadge?: boolean
   stepsEyebrow?: boolean
   stepsTitle?: boolean
   aboutTeaserEyebrow?: boolean
@@ -510,6 +534,7 @@ export type HomePageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type HomePageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  heroBadge?: boolean
   stepsEyebrow?: boolean
   stepsTitle?: boolean
   aboutTeaserEyebrow?: boolean
@@ -524,6 +549,7 @@ export type HomePageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 
 export type HomePageSelectScalar = {
   id?: boolean
+  heroBadge?: boolean
   stepsEyebrow?: boolean
   stepsTitle?: boolean
   aboutTeaserEyebrow?: boolean
@@ -536,13 +562,14 @@ export type HomePageSelectScalar = {
   updatedAt?: boolean
 }
 
-export type HomePageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stepsEyebrow" | "stepsTitle" | "aboutTeaserEyebrow" | "aboutTeaserTitle" | "aboutTeaserText" | "testimonialsEyebrow" | "testimonialsTitle" | "fundersEyebrow" | "fundersIntroText" | "updatedAt", ExtArgs["result"]["homePage"]>
+export type HomePageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "heroBadge" | "stepsEyebrow" | "stepsTitle" | "aboutTeaserEyebrow" | "aboutTeaserTitle" | "aboutTeaserText" | "testimonialsEyebrow" | "testimonialsTitle" | "fundersEyebrow" | "fundersIntroText" | "updatedAt", ExtArgs["result"]["homePage"]>
 
 export type $HomePagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "HomePage"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    heroBadge: string
     stepsEyebrow: string
     stepsTitle: string
     aboutTeaserEyebrow: string
@@ -977,6 +1004,7 @@ export interface Prisma__HomePageClient<T, Null = never, ExtArgs extends runtime
  */
 export interface HomePageFieldRefs {
   readonly id: Prisma.FieldRef<"HomePage", 'Int'>
+  readonly heroBadge: Prisma.FieldRef<"HomePage", 'String'>
   readonly stepsEyebrow: Prisma.FieldRef<"HomePage", 'String'>
   readonly stepsTitle: Prisma.FieldRef<"HomePage", 'String'>
   readonly aboutTeaserEyebrow: Prisma.FieldRef<"HomePage", 'String'>

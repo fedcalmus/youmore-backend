@@ -316,6 +316,7 @@ export type VolunteerApplicationScalarFieldEnum = (typeof VolunteerApplicationSc
 
 export const HomePageScalarFieldEnum = {
   id: 'id',
+  heroBadge: 'heroBadge',
   stepsEyebrow: 'stepsEyebrow',
   stepsTitle: 'stepsTitle',
   aboutTeaserEyebrow: 'aboutTeaserEyebrow',

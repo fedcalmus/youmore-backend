@@ -252,6 +252,7 @@ model VolunteerApplication {
 
 model HomePage {
   id                  Int      @id @default(autoincrement())
+  heroBadge           String   @default("Associazione di promozione sociale · Chiari (BS)")
   stepsEyebrow        String   @default("Come funziona")
   stepsTitle          String
   aboutTeaserEyebrow  String   @default("Chi siamo")

@@ -41,6 +41,7 @@ export async function getAdminHomePageController(_req: Request, res: Response) {
 export async function updateAdminHomePageController(req: Request, res: Response) {
     try {
         const {
+            heroBadge,
             stepsEyebrow,
             stepsTitle,
             aboutTeaserEyebrow,
@@ -53,6 +54,7 @@ export async function updateAdminHomePageController(req: Request, res: Response)
         } = req.body;
 
         const validationError = validateHomePageInput({
+            heroBadge,
             stepsEyebrow,
             stepsTitle,
             aboutTeaserEyebrow,
@@ -69,6 +71,7 @@ export async function updateAdminHomePageController(req: Request, res: Response)
         }
 
         const page = await upsertHomePage({
+            heroBadge,
             stepsEyebrow,
             stepsTitle,
             aboutTeaserEyebrow,

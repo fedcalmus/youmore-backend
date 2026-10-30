@@ -6,6 +6,7 @@ export async function getHomePage() {
 }
 
 export async function upsertHomePage(data: {
+    heroBadge: string;
     stepsEyebrow: string;
     stepsTitle: string;
     aboutTeaserEyebrow: string;

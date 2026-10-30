@@ -7,6 +7,7 @@ export const HOME_GALLERY_SLOTS = ["GROUP", "ACTIVITY", "TRAVEL"] as const;
 export type HomeGallerySlotValue = (typeof HOME_GALLERY_SLOTS)[number];
 
 export function validateHomePageInput(body: {
+    heroBadge?: unknown;
     stepsEyebrow?: unknown;
     stepsTitle?: unknown;
     aboutTeaserEyebrow?: unknown;
@@ -17,6 +18,7 @@ export function validateHomePageInput(body: {
     fundersEyebrow?: unknown;
     fundersIntroText?: unknown;
 }) {
+    if (!isNonEmptyString(body.heroBadge)) return "Hero badge is required";
     if (!isNonEmptyString(body.stepsEyebrow)) return "Steps eyebrow is required";
     if (!isNonEmptyString(body.stepsTitle)) return "Steps title is required";
     if (!isNonEmptyString(body.aboutTeaserEyebrow)) return "About teaser eyebrow is required";
